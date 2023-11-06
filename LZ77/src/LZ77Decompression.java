@@ -1,4 +1,3 @@
-package org.example;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -58,24 +57,4 @@ public class LZ77Decompression {
         return tags;
     }
 
-    public static void main(String[] args) {
-        String inputFilePath = "compressed_output.txt";
-        String outputFilePath = "decompressed_output.txt";
-
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(inputFilePath));
-            String compressedData = reader.readLine();
-            reader.close();
-
-            String decompressedData = decompress(compressedData);
-
-            BufferedWriter writer = new BufferedWriter(new FileWriter(outputFilePath));
-            writer.write(decompressedData);
-            writer.close();
-
-            System.out.println("Decompressed data saved to " + outputFilePath);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }

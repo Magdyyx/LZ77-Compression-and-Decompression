@@ -67,26 +67,4 @@ public class LZ77Compression {
         return result.toString();
     }
 
-
-
-    public static void main(String[] args) {
-        String input = "abracadabrad";
-        String compressed = compress(input);
-        System.out.println("Input: " + input);
-        System.out.println("Compressed: " + compressed);
-
-        String filePath = "compressed_output.txt";
-
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(filePath));
-
-            writer.write(compressed);
-
-            writer.close();
-
-            System.out.println("Compressed data saved to " + filePath);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }
