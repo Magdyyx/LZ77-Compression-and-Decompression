@@ -2,45 +2,14 @@ package algorithms;
 
 
 import java.io.*;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class LZWAlgorithm implements Algorithm {
+public class LZWAlgorithm extends Algorithm {
     private static final int MAX_TABLE_SIZE = 4096;
     public LZWAlgorithm() {
-    }
-
-    public boolean compress(File inputFile) {
-        Path inputPath = inputFile.toPath();
-        String inputFileName = inputPath.getFileName().toString();
-        String outputFileName = getFormattedOutputFileName(inputFileName, 0);
-        File outputFile = new File(inputPath.getParent().toString(), outputFileName);
-        compress(inputFile, outputFile);
-        try {
-            outputFile.createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
-    }
-
-    public boolean decompress(File inputFile) {
-        Path inputPath = inputFile.toPath();
-        String inputFileName = inputPath.getFileName().toString();
-        String outputFileName = getFormattedOutputFileName(inputFileName, 1);
-        File outputFile = new File(inputPath.getParent().toString(), outputFileName);
-        decompress(inputFile, outputFile);
-        try {
-            outputFile.createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
     }
 
     private List<Integer> compress(String uncompressed) {
@@ -92,23 +61,6 @@ public class LZWAlgorithm implements Algorithm {
             e.printStackTrace();
         }
 
-    }
-    private String getFormattedOutputFileName(String inputFileName, int action) {
-        int dotIndex = inputFileName.lastIndexOf('.');
-        String nameWithoutExtension = inputFileName.substring(0, dotIndex);
-        String extension = inputFileName.substring(dotIndex + 1);
-        if (dotIndex != -1){
-            if (action == 0) {
-                {
-                    return nameWithoutExtension + ".daly." + extension;
-                }
-            } else {
-                int customExtensionDotIndex = nameWithoutExtension.lastIndexOf('.');
-                String nameWithoutCustomExtension = nameWithoutExtension.substring(0, customExtensionDotIndex);
-                return nameWithoutCustomExtension + "." + extension;
-            }
-        }
-        return inputFileName + action;
     }
 
     private String decompress(List<Integer> compressedData) {
@@ -165,6 +117,4 @@ public class LZWAlgorithm implements Algorithm {
             e.printStackTrace();
         }
     }
-
-
 }

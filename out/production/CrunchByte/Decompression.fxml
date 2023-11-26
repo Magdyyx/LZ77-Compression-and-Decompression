@@ -21,7 +21,7 @@
             <Image url="@images/5690080.png" />
          </image>
       </ImageView>
-      <Button fx:id="actionBtn" layoutX="248.0" layoutY="279.0" mnemonicParsing="false" onMouseClicked="#getFile" text="Docompress">
+      <Button fx:id="actionBtn" layoutX="248.0" layoutY="279.0" mnemonicParsing="false" onMouseClicked="#getFile" text="Decompress">
          <font>
             <Font size="15.0" />
          </font>

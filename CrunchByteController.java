@@ -1,4 +1,5 @@
 import algorithms.Algorithm;
+import algorithms.LZ77Algorithm;
 import algorithms.LZWAlgorithm;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -110,9 +111,9 @@ public class CrunchByteController implements Initializable {
    private Algorithm algorithmFactory(String algorithmName) {
       Algorithm algorithm = null;
       if(algorithmName.equals("LZW")) {
-         algorithm = (Algorithm) new LZWAlgorithm();
+         algorithm = new LZWAlgorithm();
       } else if (algorithmName.equals("LZ77")) {
-         // create new pbject of LZ77
+         algorithm = new LZ77Algorithm();
       } else if (algorithmName.equals("Modified Huffman")) {
          //
       }
