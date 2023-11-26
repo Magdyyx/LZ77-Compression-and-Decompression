@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CrunchByteController">
+   <children>
+      <Label layoutX="173.0" layoutY="14.0" text="File Decompression">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="31.0" fitWidth="32.0" layoutX="14.0" layoutY="21.0" onMouseClicked="#goBackToWelcome" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/5690080.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="actionBtn" layoutX="248.0" layoutY="279.0" mnemonicParsing="false" onMouseClicked="#getFile" text="Docompress">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <Label layoutX="200.0" layoutY="130.0" text="Choose an Algorithm">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="158.0" layoutY="235.0" text="Hit the button to choose a file">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <ChoiceBox fx:id="algorithmChoice" layoutX="225.0" layoutY="174.0" prefWidth="150.0" />
+   </children>
+</AnchorPane>
