@@ -80,15 +80,26 @@ public class HuffmanAlgorithm extends Algorithm {
     public void compress(File inputFile, File outputFile) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(outputFile));
              BufferedReader br = new BufferedReader(new FileReader(inputFile))) {
+
             StringBuilder uncompressedData = new StringBuilder();
             String line;
             while ((line = br.readLine()) != null) {
                 uncompressedData.append(line);
             }
 
+            // Build Huffman tree
+            buildHuffmanTree(buildFrequencyMap(uncompressedData.toString()));
+
+            // Generate Huffman codes
             Map<Character, String> huffmanCodes = buildHuffmanCodes(uncompressedData.toString());
 
-            // Write Huffman codes to the output file
+            // Write Huffman codes to the output file header
+            for (Map.Entry<Character, String> entry : huffmanCodes.entrySet()) {
+                bw.write(entry.getKey() + ":" + entry.getValue() + "\n");
+            }
+            bw.write("\n"); // End of header
+
+            // Write compressed data to the output file
             for (char c : uncompressedData.toString().toCharArray()) {
                 bw.write(huffmanCodes.get(c));
             }
@@ -100,7 +111,87 @@ public class HuffmanAlgorithm extends Algorithm {
 
     @Override
     public void decompress(File inputFile, File outputFile) {
-        // TODO: Implement decompression
+        try (BufferedReader br = new BufferedReader(new FileReader(inputFile));
+             BufferedWriter bw = new BufferedWriter(new FileWriter(outputFile))) {
+
+            Map<Character, String> huffmanCodes = readHuffmanCodes(br);
+
+            buildHuffmanTree(buildFrequencyMapFromCodes(huffmanCodes));
+
+            // Decompress data
+            String compressedData = readCompressedData(br);
+            String decompressedData = decompressData(compressedData);
+            System.out.println("Decompressed Data:");
+            System.out.println(decompressedData);
+
+            bw.write(decompressedData);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private Map<Character, String> readHuffmanCodes(BufferedReader br) throws IOException {
+        Map<Character, String> huffmanCodes = new HashMap<>();
+
+        String line;
+        while ((line = br.readLine()) != null && !line.isEmpty()) {
+            String[] parts = line.split(":");
+            char symbol = parts[0].charAt(0);
+            String code = parts[1];
+            huffmanCodes.put(symbol, code);
+        }
+
+        return huffmanCodes;
+    }
+
+    private Map<Character, Integer> buildFrequencyMapFromCodes(Map<Character, String> huffmanCodes) {
+        Map<Character, Integer> frequencyMap = new HashMap<>();
+        for (Map.Entry<Character, String> entry : huffmanCodes.entrySet()) {
+            char symbol = entry.getKey();
+            int frequency = entry.getValue().length();
+            frequencyMap.put(symbol, frequency);
+        }
+        return frequencyMap;
+    }
+
+    private String readCompressedData(BufferedReader br) throws IOException {
+        StringBuilder compressedData = new StringBuilder();
+        String line;
+        while ((line = br.readLine()) != null) {
+            compressedData.append(line);
+        }
+        return compressedData.toString();
+    }
+
+
+    private Map<Character, Integer> buildFrequencyMap(String input) {
+        Map<Character, Integer> frequencyMap = new HashMap<>();
+        for (char c : input.toCharArray()) {
+            frequencyMap.put(c, frequencyMap.getOrDefault(c, 0) + 1);
+        }
+        return frequencyMap;
+    }
+
+    private String decompressData(String compressedData) {
+        StringBuilder decompressedData = new StringBuilder();
+        HuffmanNode current = rootOfHuffmanTree;
+
+        for (int i = 0; i < compressedData.length(); i++) {
+            char bit = compressedData.charAt(i);
+
+            if (bit == '0') {
+                current = current.left;
+            } else if (bit == '1') {
+                current = current.right;
+            }
+
+            if (current.left == null && current.right == null) {
+                decompressedData.append(current.character);
+                current = rootOfHuffmanTree;
+            }
+        }
+
+        return decompressedData.toString();
     }
 }
 

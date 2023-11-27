@@ -37,7 +37,7 @@ public class CrunchByteController implements Initializable {
 
    @Override
    public void initialize(URL location, ResourceBundle resources) {
-      fileChooser.setInitialDirectory(new File("D:\\Study\\FCAI\\Third year\\Data Compression\\Assignment 2\\LZW-Compression-and-Decompression"));
+      fileChooser.setInitialDirectory(new File("D:\\Study\\Level 3\\Information Theory\\Assignments\\CrunchByte"));
       algorithmChoice.getItems().addAll(algorithms);
    }
 
