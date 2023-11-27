@@ -1,7 +1,4 @@
-import algorithms.Algorithm;
-import algorithms.HuffmanAlgorithm;
-import algorithms.LZ77Algorithm;
-import algorithms.LZWAlgorithm;
+import algorithms.*;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -27,7 +24,7 @@ public class CrunchByteController implements Initializable {
    FileChooser fileChooser = new FileChooser();
    @FXML
    private ChoiceBox<String> algorithmChoice = new ChoiceBox<>();
-   private String[] algorithms = {"LZ77", "LZW", "Huffman"};
+   private String[] algorithms = {"LZ77", "LZW", "Standard Huffman","Modified Huffman"};
    private Stage stage;
    private Scene scene;
    private Parent root;
@@ -121,8 +118,10 @@ public class CrunchByteController implements Initializable {
          algorithm = new LZWAlgorithm();
       } else if (algorithmName.equals("LZ77")) {
          algorithm = new LZ77Algorithm();
-      } else if (algorithmName.equals("Huffman")) {
-         algorithm = new HuffmanAlgorithm();
+      } else if (algorithmName.equals("Modified Huffman")) {
+         algorithm = new ModifiedHuffmanAlgorithm();
+      } else if (algorithmName.equals("Standard Huffman")) {
+         algorithm = new StandardHuffmanAlgorithm();
       }
       return algorithm;
    }
