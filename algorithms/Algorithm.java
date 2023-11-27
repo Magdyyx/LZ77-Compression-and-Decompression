@@ -36,21 +36,32 @@ public abstract class Algorithm {
     }
 
 
+//    private String getFormattedOutputFileName(String inputFileName, int action) {
+//        int dotIndex = inputFileName.lastIndexOf('.');
+//        String nameWithoutExtension = inputFileName.substring(0, dotIndex);
+//        String extension = inputFileName.substring(dotIndex + 1);
+//        if (dotIndex != -1){
+//            if (action == 0) {
+//                {
+//                    return nameWithoutExtension + ".daly";
+//                }
+//            } else {
+//                return nameWithoutExtension + ".txt";
+//            }
+//        }
+//        return inputFileName + action;
+//    }
     private String getFormattedOutputFileName(String inputFileName, int action) {
         int dotIndex = inputFileName.lastIndexOf('.');
-        String nameWithoutExtension = inputFileName.substring(0, dotIndex);
-        String extension = inputFileName.substring(dotIndex + 1);
-        if (dotIndex != -1){
-            if (action == 0) {
-                {
-                    return nameWithoutExtension + ".daly";
-                }
-            } else {
-                return nameWithoutExtension + ".txt";
-            }
+        String nameWithoutExtension = (dotIndex != -1) ? inputFileName.substring(0, dotIndex) : inputFileName;
+
+        if (action == 0) {
+            return nameWithoutExtension + ".compressed.txt";
+        } else {
+            return nameWithoutExtension + ".decompressedoutput.txt";
         }
-        return inputFileName + action;
     }
+
 
     public abstract void compress(File inputFile, File outputFile);
     public abstract void decompress(File inputFile, File outputFile);

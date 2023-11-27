@@ -1,4 +1,5 @@
 import algorithms.Algorithm;
+import algorithms.HuffmanAlgorithm;
 import algorithms.LZ77Algorithm;
 import algorithms.LZWAlgorithm;
 import javafx.fxml.FXMLLoader;
@@ -26,7 +27,7 @@ public class CrunchByteController implements Initializable {
    FileChooser fileChooser = new FileChooser();
    @FXML
    private ChoiceBox<String> algorithmChoice = new ChoiceBox<>();
-   private String[] algorithms = {"LZ77", "LZW", "Modified Huffman"};
+   private String[] algorithms = {"LZ77", "LZW", "Huffman"};
    private Stage stage;
    private Scene scene;
    private Parent root;
@@ -36,7 +37,7 @@ public class CrunchByteController implements Initializable {
 
    @Override
    public void initialize(URL location, ResourceBundle resources) {
-      fileChooser.setInitialDirectory(new File("D:\\Study\\Level 3\\Information Theory\\Assignments\\CrunchByte"));
+      fileChooser.setInitialDirectory(new File("D:\\Study\\FCAI\\Third year\\Data Compression\\Assignment 2\\LZW-Compression-and-Decompression"));
       algorithmChoice.getItems().addAll(algorithms);
    }
 
@@ -78,10 +79,16 @@ public class CrunchByteController implements Initializable {
    @FXML
    void getFile(MouseEvent event) {
       File file = fileChooser.showOpenDialog(new Stage());
+      if (file == null) {
+         // User canceled the file selection
+         return;
+      }
+
       String algorithm = algorithmChoice.getValue();
       String action = actionBtn.getText();
       Alert alert;
-      if(performAlgorithm(file, algorithm, action)){
+
+      if (performAlgorithm(file, algorithm, action)) {
          alert = new Alert(Alert.AlertType.CONFIRMATION);
          alert.setTitle("Information Dialog!!");
          alert.setHeaderText("Action Done");
@@ -114,8 +121,8 @@ public class CrunchByteController implements Initializable {
          algorithm = new LZWAlgorithm();
       } else if (algorithmName.equals("LZ77")) {
          algorithm = new LZ77Algorithm();
-      } else if (algorithmName.equals("Modified Huffman")) {
-         //
+      } else if (algorithmName.equals("Huffman")) {
+         algorithm = new HuffmanAlgorithm();
       }
       return algorithm;
    }
