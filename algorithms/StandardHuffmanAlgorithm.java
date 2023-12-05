@@ -1,10 +1,11 @@
 package algorithms;
+
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.PriorityQueue;
 
-public class StandardHuffmanAlgorithm extends Algorithm{
+public class StandardHuffmanAlgorithm extends Algorithm {
 
     static class HuffmanNode implements Comparable<HuffmanNode> {
         int data;
@@ -23,6 +24,48 @@ public class StandardHuffmanAlgorithm extends Algorithm{
     }
 
     private HuffmanNode rootOfHuffmanTree;
+
+    @Override
+    public void compress(File inputFile, File outputFile) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(outputFile));
+             BufferedReader br = new BufferedReader(new FileReader(inputFile))) {
+
+            StringBuilder uncompressedData = new StringBuilder();
+            String line;
+            while ((line = br.readLine()) != null) {
+                uncompressedData.append(line);
+            }
+
+            Map<Character, String> huffmanCodes = buildHuffmanCodes(uncompressedData.toString());
+
+            for (Map.Entry<Character, String> entry : huffmanCodes.entrySet()) {
+                bw.write(entry.getKey() + ":" + entry.getValue() + "\n");
+            }
+            bw.write("\n");
+
+            for (char c : uncompressedData.toString().toCharArray()) {
+                bw.write(huffmanCodes.get(c));
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private Map<Character, String> buildHuffmanCodes(String input) {
+        Map<Character, Integer> frequencyMap = new HashMap<>();
+        for (char c : input.toCharArray()) {
+            frequencyMap.put(c, frequencyMap.getOrDefault(c, 0) + 1);
+        }
+
+        buildHuffmanTree(frequencyMap);
+
+        Map<Character, String> huffmanCodes = new HashMap<>();
+        generateHuffmanCodes(rootOfHuffmanTree, "", huffmanCodes);
+
+        return huffmanCodes;
+    }
 
     private void buildHuffmanTree(Map<Character, Integer> frequencyMap) {
         PriorityQueue<HuffmanNode> priorityQueue = new PriorityQueue<>();
@@ -56,42 +99,8 @@ public class StandardHuffmanAlgorithm extends Algorithm{
         generateHuffmanCodes(root.right, code + "1", huffmanCodes);
     }
 
-    private Map<Character, String> buildHuffmanCodes(String input) {
-        Map<Character, Integer> frequencyMap = buildFrequencyMap(input);
-        buildHuffmanTree(frequencyMap);
 
-        Map<Character, String> huffmanCodes = new HashMap<>();
-        generateHuffmanCodes(rootOfHuffmanTree, "", huffmanCodes);
-
-        return huffmanCodes;
-    }
-
-    public void compress(File inputFile, File outputFile) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(outputFile));
-             BufferedReader br = new BufferedReader(new FileReader(inputFile))) {
-
-            StringBuilder uncompressedData = new StringBuilder();
-            String line;
-            while ((line = br.readLine()) != null) {
-                uncompressedData.append(line);
-            }
-
-            Map<Character, String> huffmanCodes = buildHuffmanCodes(uncompressedData.toString());
-
-            for (Map.Entry<Character, String> entry : huffmanCodes.entrySet()) {
-                bw.write(entry.getKey() + ":" + entry.getValue() + "\n");
-            }
-            bw.write("\n");
-
-            for (char c : uncompressedData.toString().toCharArray()) {
-                bw.write(huffmanCodes.get(c));
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
+    @Override
     public void decompress(File inputFile, File outputFile) {
         try (BufferedReader br = new BufferedReader(new FileReader(inputFile));
              BufferedWriter bw = new BufferedWriter(new FileWriter(outputFile))) {
@@ -109,7 +118,6 @@ public class StandardHuffmanAlgorithm extends Algorithm{
             e.printStackTrace();
         }
     }
-
     private Map<Character, String> readHuffmanCodes(BufferedReader br) throws IOException {
         Map<Character, String> huffmanCodes = new HashMap<>();
 
@@ -143,13 +151,6 @@ public class StandardHuffmanAlgorithm extends Algorithm{
         return compressedData.toString();
     }
 
-    private Map<Character, Integer> buildFrequencyMap(String input) {
-        Map<Character, Integer> frequencyMap = new HashMap<>();
-        for (char c : input.toCharArray()) {
-            frequencyMap.put(c, frequencyMap.getOrDefault(c, 0) + 1);
-        }
-        return frequencyMap;
-    }
 
     private String decompressData(String compressedData) {
         StringBuilder decompressedData = new StringBuilder();
@@ -172,5 +173,5 @@ public class StandardHuffmanAlgorithm extends Algorithm{
 
         return decompressedData.toString();
     }
-
 }
+

@@ -24,7 +24,7 @@ public class CrunchByteController implements Initializable {
    FileChooser fileChooser = new FileChooser();
    @FXML
    private ChoiceBox<String> algorithmChoice = new ChoiceBox<>();
-   private String[] algorithms = {"LZ77", "LZW", "Standard Huffman","Modified Huffman"};
+   private String[] algorithms = {"LZ77", "LZW", "Standard Huffman", "Vector Quantization"};
    private Stage stage;
    private Scene scene;
    private Parent root;
@@ -118,9 +118,10 @@ public class CrunchByteController implements Initializable {
          algorithm = new LZWAlgorithm();
       } else if (algorithmName.equals("LZ77")) {
          algorithm = new LZ77Algorithm();
-      } else if (algorithmName.equals("Modified Huffman")) {
-         algorithm = new ModifiedHuffmanAlgorithm();
-      } else if (algorithmName.equals("Standard Huffman")) {
+      } else if (algorithmName.equals("Vector Quantization")) {
+         algorithm = new VectorQuantization();
+      }
+       else if (algorithmName.equals("Standard Huffman")) {
          algorithm = new StandardHuffmanAlgorithm();
       }
       return algorithm;

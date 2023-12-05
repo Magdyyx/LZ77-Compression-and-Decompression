@@ -36,22 +36,7 @@ public abstract class Algorithm {
     }
 
 
-//    private String getFormattedOutputFileName(String inputFileName, int action) {
-//        int dotIndex = inputFileName.lastIndexOf('.');
-//        String nameWithoutExtension = inputFileName.substring(0, dotIndex);
-//        String extension = inputFileName.substring(dotIndex + 1);
-//        if (dotIndex != -1){
-//            if (action == 0) {
-//                {
-//                    return nameWithoutExtension + ".daly";
-//                }
-//            } else {
-//                return nameWithoutExtension + ".txt";
-//            }
-//        }
-//        return inputFileName + action;
-//    }
-    private String getFormattedOutputFileName(String inputFileName, int action) {
+    public String getFormattedOutputFileName(String inputFileName, int action) {
         int dotIndex = inputFileName.lastIndexOf('.');
         String nameWithoutExtension = (dotIndex != -1) ? inputFileName.substring(0, dotIndex) : inputFileName;
 
