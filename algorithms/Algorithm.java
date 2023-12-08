@@ -10,7 +10,11 @@ public abstract class Algorithm {
         String inputFileName = inputPath.getFileName().toString();
         String outputFileName = getFormattedOutputFileName(inputFileName, 0);
         File outputFile = new File(inputPath.getParent().toString(), outputFileName);
-        compress(inputFile, outputFile);
+        try {
+            compress(inputFile, outputFile);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         try {
             outputFile.createNewFile();
         } catch (IOException e) {
@@ -25,7 +29,11 @@ public abstract class Algorithm {
         String inputFileName = inputPath.getFileName().toString();
         String outputFileName = getFormattedOutputFileName(inputFileName, 1);
         File outputFile = new File(inputPath.getParent().toString(), outputFileName);
-        decompress(inputFile, outputFile);
+        try {
+            decompress(inputFile, outputFile);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         try {
             outputFile.createNewFile();
         } catch (IOException e) {
@@ -48,8 +56,8 @@ public abstract class Algorithm {
     }
 
 
-    public abstract void compress(File inputFile, File outputFile);
-    public abstract void decompress(File inputFile, File outputFile);
+    public abstract void compress(File inputFile, File outputFile) throws IOException;
+    public abstract void decompress(File inputFile, File outputFile) throws IOException;
 
 
 }

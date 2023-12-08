@@ -119,7 +119,7 @@ public class CrunchByteController implements Initializable {
       } else if (algorithmName.equals("LZ77")) {
          algorithm = new LZ77Algorithm();
       } else if (algorithmName.equals("Vector Quantization")) {
-         algorithm = new VectorQuantization();
+         algorithm = new VectorQuantizer();
       }
        else if (algorithmName.equals("Standard Huffman")) {
          algorithm = new StandardHuffmanAlgorithm();
