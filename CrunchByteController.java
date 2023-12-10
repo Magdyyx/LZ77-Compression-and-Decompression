@@ -24,7 +24,7 @@ public class CrunchByteController implements Initializable {
    FileChooser fileChooser = new FileChooser();
    @FXML
    private ChoiceBox<String> algorithmChoice = new ChoiceBox<>();
-   private String[] algorithms = {"LZ77", "LZW", "Standard Huffman", "Vector Quantization"};
+   private String[] algorithms = {"LZ77", "LZW", "Standard Huffman", "Vector Quantization","Vector Quantization RGB"};
    private Stage stage;
    private Scene scene;
    private Parent root;
@@ -34,7 +34,7 @@ public class CrunchByteController implements Initializable {
 
    @Override
    public void initialize(URL location, ResourceBundle resources) {
-      fileChooser.setInitialDirectory(new File("D:\\Study\\Level 3\\Information Theory\\Assignments\\CrunchByte"));
+      fileChooser.setInitialDirectory(new File("D:\\Study\\FCAI\\Third year\\Data Compression\\Assignment 1\\LZ77-Compression-and-Decompression"));
       algorithmChoice.getItems().addAll(algorithms);
    }
 
@@ -124,6 +124,9 @@ public class CrunchByteController implements Initializable {
        else if (algorithmName.equals("Standard Huffman")) {
          algorithm = new StandardHuffmanAlgorithm();
       }
+        else if (algorithmName.equals("Vector Quantization RGB")) {
+             algorithm = new VectorQuantizationRGB();
+        }
       return algorithm;
    }
 }
