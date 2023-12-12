@@ -125,7 +125,7 @@ public class CrunchByteController implements Initializable {
          algorithm = new StandardHuffmanAlgorithm();
       }
         else if (algorithmName.equals("Vector Quantization RGB")) {
-             algorithm = new VectorQuantizationRGB();
+//             algorithm = new VectorQuantizationRGB();
         }
       return algorithm;
    }

@@ -5,9 +5,7 @@ package algorithms;
  * and open the template in the editor.
  */
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.File;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -30,24 +28,37 @@ public class VectorQuantizer extends Algorithm{
 
         Input = newReader.readImage(FileName);
 
-        InputVectors = DivedeIntoVectors(Input, vectRows); // devide image into blocks
+        InputVectors = DivedeIntoVectors(Input, vectRows); // divide image into blocks
 
         codeBook = Create_Code_Book(InputVectors, codeBookLength, vectRows);
 
         Output = Make_Level(InputVectors, codeBook, vectRows);
 
-        x.open_File("compressionOutput.txt");
-        x.writeArrayList(Output);
-        x.close_File();
-        // write codebook into file
-        x.open_File("CodeBook.txt");
-        for (int i = 0; i < codeBook.size(); i++) {
-            x.writeArrayList(codeBook.get(i).getList());
+        // write binary data as strings to compressionOutput.txt
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("compressionOutput.txt"))) {
+            for (Integer value : Output) {
+                writer.write(Integer.toBinaryString(value));
+                writer.newLine();
+            }
         }
-        x.close_File();
-        x.open_File("OriginalPexils.txt");
-        x.writeArrayList(Input);
-        x.close_File();
+
+        // write binary data as strings to CodeBook.txt
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("CodeBook.txt"))) {
+            for (Vector vector : codeBook) {
+                for (Integer value : vector.getList()) {
+                    writer.write(Integer.toBinaryString(value));
+                    writer.newLine();
+                }
+            }
+        }
+
+        // write binary data as strings to OriginalPixels.txt
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("OriginalPixels.txt"))) {
+            for (Integer value : Input) {
+                writer.write(Integer.toBinaryString(value));
+                writer.newLine();
+            }
+        }
     }
 
     public void Decompression(String fileName, int vectRows) throws FileNotFoundException, IOException {
