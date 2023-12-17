@@ -24,7 +24,7 @@ public class CrunchByteController implements Initializable {
    FileChooser fileChooser = new FileChooser();
    @FXML
    private ChoiceBox<String> algorithmChoice = new ChoiceBox<>();
-   private String[] algorithms = {"LZ77", "LZW", "Standard Huffman", "Vector Quantization","Vector Quantization RGB"};
+   private String[] algorithms = {"LZ77", "LZW", "Standard Huffman", "Vector Quantization","Vector Quantization RGB","TwoDPredictiveCoding"};
    private Stage stage;
    private Scene scene;
    private Parent root;
@@ -127,6 +127,9 @@ public class CrunchByteController implements Initializable {
         else if (algorithmName.equals("Vector Quantization RGB")) {
 //             algorithm = new VectorQuantizationRGB();
         }
+        else if (algorithmName.equals("TwoDPredictiveCoding")) {
+             algorithm = new TwoDPredictiveCoding();
+      }
       return algorithm;
    }
 }
